@@ -24,7 +24,7 @@
         <!--//ML kit-->
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
-            android:value="custom_ica" />
+            android:value="ica" />
         <!-- To use multiple downloads: android:value="custom_ica,download2,download3" -->
 
     </application>

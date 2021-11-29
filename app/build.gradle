@@ -77,9 +77,9 @@ dependencies {
     implementation "com.google.firebase:firebase-storage-ktx"
 
     // ML Kit
-    implementation 'com.google.mlkit:image-labeling-custom:16.3.1'
+    implementation 'com.google.mlkit:image-labeling-custom:17.0.5'
     // Use this dependency to use the dynamically downloaded pipeline in Google Play Services
-    implementation 'com.google.android.gms:play-services-mlkit-image-labeling-custom:16.0.0-beta1'
+    implementation 'com.google.android.gms:play-services-mlkit-image-labeling:16.0.5'
     // Image labeling feature with model downloaded from Firebase
     implementation 'com.google.mlkit:image-labeling-custom:16.3.1'
     // Or use the dynamically downloaded pipeline in Google Play Services
