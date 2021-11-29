@@ -47,6 +47,12 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+
+    //ML kit
+    aaptOptions {
+        noCompress "tflite"
+        // or noCompress "lite"
+    }
 }
 
 dependencies {
@@ -69,6 +75,17 @@ dependencies {
     implementation platform("com.google.firebase:firebase-bom:29.0.0")
     implementation "com.google.firebase:firebase-analytics-ktx"
     implementation "com.google.firebase:firebase-storage-ktx"
+
+    // ML Kit
+    implementation 'com.google.mlkit:image-labeling-custom:16.3.1'
+    // Use this dependency to use the dynamically downloaded pipeline in Google Play Services
+    implementation 'com.google.android.gms:play-services-mlkit-image-labeling-custom:16.0.0-beta1'
+    // Image labeling feature with model downloaded from Firebase
+    implementation 'com.google.mlkit:image-labeling-custom:16.3.1'
+    // Or use the dynamically downloaded pipeline in Google Play Services
+    // implementation 'com.google.android.gms:play-services-mlkit-image-labeling-custom:16.0.0-beta1'
+    implementation 'com.google.mlkit:linkfirebase:16.1.1'
+
 
     //Nav
     implementation 'androidx.navigation:navigation-compose:2.4.0-beta02'

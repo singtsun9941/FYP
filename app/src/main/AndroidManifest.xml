@@ -20,6 +20,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--//ML kit-->
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="custom_ica" />
+        <!-- To use multiple downloads: android:value="custom_ica,download2,download3" -->
+
     </application>
 
 </manifest>
