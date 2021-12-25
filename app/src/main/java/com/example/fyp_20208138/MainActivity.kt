@@ -34,12 +34,14 @@ class MainActivity : ComponentActivity() {
         .setAvailableProviders(providers)
         .build()
 
+
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
             // Successfully signed in
             val user = FirebaseAuth.getInstance().currentUser
             // ...
+
         } else {
             // Sign in failed. If response is null the user canceled the
             // sign-in flow using the back button. Otherwise check
@@ -54,13 +56,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         analytics = FirebaseAnalytics.getInstance(this)
-
+        signInLauncher.launch(signInIntent)
         setContent {
             FYP_20208138Theme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    signInLauncher.launch(signInIntent)
-//                    Nav()
+
+                    Nav()
 
 //                    //Test FireBase
 //                    Button(onClick = {
