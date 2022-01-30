@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -14,11 +16,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.fyp_20208138.ui.home.Home
+import com.example.fyp_20208138.ui.home.imgLabeling
+import com.example.fyp_20208138.ui.userProfile.UserProfile
+import com.google.firebase.auth.FirebaseUser
 
 
 @ExperimentalMaterialApi
 @Composable
-fun Nav() {
+fun Nav(user: FirebaseUser?) {
     val navController = rememberNavController()
 
     Scaffold(bottomBar = {
@@ -64,6 +69,8 @@ fun Nav() {
             startDestination = "home",
         ) {
             composable("home") { Home() }
+//            composable("userProfile") { UserProfile() }
+            composable("imgLabeling") { imgLabeling() }
 
         }
     }
@@ -79,6 +86,7 @@ data class NavItem(
     companion object {
         val data = listOf(
             NavItem("home", android.R.drawable.btn_star_big_off, "Home"),
+            NavItem("imgLabeling", android.R.drawable.btn_star_big_off, "imgLabeling"),
 
         )
     }

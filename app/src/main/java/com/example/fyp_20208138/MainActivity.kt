@@ -1,24 +1,35 @@
 package com.example.fyp_20208138
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.viewModels
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.fyp_20208138.ui.nav.Nav
 import com.example.fyp_20208138.ui.theme.FYP_20208138Theme
+import com.example.fyp_20208138.ui.userProfile.UserProfile
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+
 
 class MainActivity : ComponentActivity() {
 
+    
     private lateinit var analytics: FirebaseAnalytics
     // See: https://developer.android.com/training/basics/intents/result
+    @ExperimentalMaterialApi
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ) { res ->
@@ -34,13 +45,43 @@ class MainActivity : ComponentActivity() {
         .setAvailableProviders(providers)
         .build()
 
+    @ExperimentalMaterialApi
+    @SuppressLint("InvalidAnalyticsName")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        analytics = FirebaseAnalytics.getInstance(this)
+        signInLauncher.launch(signInIntent)
 
+    }
+
+
+    @ExperimentalMaterialApi
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
+            Log.i("Google Auth","Successfully signed in")
+
             // Successfully signed in
             val user = FirebaseAuth.getInstance().currentUser
+            Log.i("Google Auth","user: " + user)
             // ...
+            setContent {
+                FYP_20208138Theme {
+                    // A surface container using the 'background' color from the theme
+                    Surface(color = MaterialTheme.colors.background) {
+                    Nav(user)
+
+
+//                  //Test FireBase
+//                    Button(onClick = {
+//                        analytics.logEvent("button_clicked", null)
+//                    }) {
+//
+//                    }
+                    }
+                }
+            }
+
 
         } else {
             // Sign in failed. If response is null the user canceled the
@@ -51,29 +92,7 @@ class MainActivity : ComponentActivity() {
     }
 
 
-    @ExperimentalMaterialApi
-    @SuppressLint("InvalidAnalyticsName")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        analytics = FirebaseAnalytics.getInstance(this)
-        signInLauncher.launch(signInIntent)
-        setContent {
-            FYP_20208138Theme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
 
-                    Nav()
-
-//                    //Test FireBase
-//                    Button(onClick = {
-//                        analytics.logEvent("button_clicked", null)
-//                    }) {
-//
-//                    }
-                }
-            }
-        }
-    }
 }
 
 @Composable
@@ -88,3 +107,4 @@ fun DefaultPreview() {
         Greeting("Android")
     }
 }
+
