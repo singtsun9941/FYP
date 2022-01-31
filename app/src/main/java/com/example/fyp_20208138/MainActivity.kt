@@ -44,6 +44,7 @@ class MainActivity : ComponentActivity() {
         .setAvailableProviders(providers)
         .build()
 
+
     @ExperimentalMaterialApi
     @SuppressLint("InvalidAnalyticsName")
     override fun onCreate(savedInstanceState: Bundle?) {
