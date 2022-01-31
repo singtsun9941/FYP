@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.fyp_20208138.ui.nav.Nav
 import com.example.fyp_20208138.ui.theme.FYP_20208138Theme
-import com.example.fyp_20208138.ui.userProfile.UserProfile
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
@@ -69,7 +68,7 @@ class MainActivity : ComponentActivity() {
                 FYP_20208138Theme {
                     // A surface container using the 'background' color from the theme
                     Surface(color = MaterialTheme.colors.background) {
-                    Nav(user)
+                    Nav()
 
 
 //                  //Test FireBase

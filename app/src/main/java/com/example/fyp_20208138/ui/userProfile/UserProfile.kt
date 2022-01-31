@@ -1,29 +1,37 @@
 package com.example.fyp_20208138.ui.userProfile
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.example.fyp_20208138.MainViewModel
 
+import androidx.compose.material.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 @Composable
-fun UserProfile(viewModel: MainViewModel, onSignIn: () -> Unit, onSignOut: () -> Unit) {
-    val currentUser = viewModel.currentUser
+fun UserProfile() {
+    Scaffold(topBar = { TopAppBar(title = { Text("Home") }) }) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            val user = Firebase.auth.currentUser
+            user?.let {
+                // Name, email address, and profile photo Url
+                val name = user.displayName
+                name?.let{
+                    Text(name)
+                }
+                val email = user.email
+                val photoUrl = user.photoUrl
 
-    Column(modifier = Modifier.padding(16.dp)) {
-        if (currentUser == null) {
-            Button(onClick = { onSignIn() }){
-                Text(text = "Sign in with Google")
-            }
-        }
-        else {
-            Text(text = "Welcome, ${currentUser.displayName}")
-            Button(onClick = { onSignOut() } ) {
-                Text(text = "Sign out")
+                // Check if user's email is verified
+                val emailVerified = user.isEmailVerified
+
+                // The user's ID, unique to the Firebase project. Do NOT use this value to
+                // authenticate with your backend server, if you have one. Use
+                // FirebaseUser.getToken() instead.
+                val uid = user.uid
             }
         }
     }
