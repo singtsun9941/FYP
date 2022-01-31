@@ -23,15 +23,23 @@ fun UserProfile() {
                     Text(name)
                 }
                 val email = user.email
+                email?.let{
+                    Text(email)
+                }
                 val photoUrl = user.photoUrl
+
 
                 // Check if user's email is verified
                 val emailVerified = user.isEmailVerified
+
 
                 // The user's ID, unique to the Firebase project. Do NOT use this value to
                 // authenticate with your backend server, if you have one. Use
                 // FirebaseUser.getToken() instead.
                 val uid = user.uid
+                uid?.let{
+                    Text(uid)
+                }
             }
         }
     }
