@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FYP_20208138</string>
+    <string name="title_activity_camera">CameraActivity</string>
 </resources>
