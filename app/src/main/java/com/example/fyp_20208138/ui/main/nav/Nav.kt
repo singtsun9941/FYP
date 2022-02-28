@@ -16,6 +16,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.fyp_20208138.ui.main.home.Home
+import com.example.fyp_20208138.ui.main.userProfile.UserProfile
+
 //import com.example.fyp_20208138.ui.userProfile.UserProfile
 //import com.google.firebase.auth.FirebaseUser
 
@@ -68,7 +70,7 @@ fun Nav() {
             startDestination = "home",
         ) {
             composable("home") { Home() }
-//            composable("profile") { UserProfile() }
+            composable("profile") { UserProfile() }
 
         }
     }
@@ -84,7 +86,7 @@ data class NavItem(
     companion object {
         val data = listOf(
             NavItem("home", android.R.drawable.btn_star_big_off, "Home"),
-//            NavItem("profile", android.R.drawable.btn_star_big_off, "Profile"),
+            NavItem("profile", android.R.drawable.btn_star_big_off, "Profile"),
 
             )
     }
