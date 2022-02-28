@@ -1,4 +1,4 @@
-package com.example.fyp_20208138.ui.userProfile
+package com.example.fyp_20208138.ui.main.userProfile
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme

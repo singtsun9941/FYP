@@ -1,4 +1,4 @@
-package com.example.fyp_20208138.ui.cameraPreview
+package com.example.fyp_20208138.ui.camera
 
 sealed class CameraUIAction {
     object OnCameraClick : CameraUIAction()

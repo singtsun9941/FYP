@@ -9,8 +9,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.fyp_20208138.ui.nav.Nav
 import com.example.fyp_20208138.ui.theme.FYP_20208138Theme
+import com.example.fyp_20208138.ui.main.nav.Nav
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
