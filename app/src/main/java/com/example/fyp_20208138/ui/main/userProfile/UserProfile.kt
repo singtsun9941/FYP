@@ -1,18 +1,21 @@
 package com.example.fyp_20208138.ui.main.userProfile
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalContext
+import com.example.fyp_20208138.CameraActivity
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 @Composable
 fun UserProfile() {
+    val context = LocalContext.current
+
     Scaffold(topBar = { TopAppBar(title = { Text("Home") }) }) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             val user = Firebase.auth.currentUser
@@ -40,6 +43,14 @@ fun UserProfile() {
                 uid?.let{
                     Text(uid)
                 }
+            }
+
+            Button(onClick = {
+                AuthUI.getInstance()
+                    .signOut(context)
+
+            }) {
+                Text("Log out")
             }
         }
     }

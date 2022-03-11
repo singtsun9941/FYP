@@ -65,14 +65,6 @@ class MainActivity : ComponentActivity() {
                     // A surface container using the 'background' color from the theme
                     Surface(color = MaterialTheme.colors.background) {
                     Nav()
-
-
-//                  //Test FireBase
-//                    Button(onClick = {
-//                        analytics.logEvent("button_clicked", null)
-//                    }) {
-//
-//                    }
                     }
                 }
             }

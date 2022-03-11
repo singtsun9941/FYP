@@ -15,7 +15,7 @@ fun Home() {
     val context = LocalContext.current
     Scaffold(topBar = { TopAppBar(title = { Text("Home") }) }) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Home")
+            Text("Take photo")
             Button(onClick = {
                 context.startActivity(Intent(context, CameraActivity::class.java))
             }) {
