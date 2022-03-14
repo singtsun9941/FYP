@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import com.example.fyp_20208138.CameraActivity
+import com.example.fyp_20208138.FacebookActivity
+
 //import com.example.fyp_20208138.MainActivity
 
 @Composable
@@ -20,6 +22,11 @@ fun Home() {
                 context.startActivity(Intent(context, CameraActivity::class.java))
             }) {
                 Text("+")
+            }
+            Button(onClick = {
+                context.startActivity(Intent(context, FacebookActivity::class.java))
+            }) {
+                Text("facebook")
             }
         }
     }
