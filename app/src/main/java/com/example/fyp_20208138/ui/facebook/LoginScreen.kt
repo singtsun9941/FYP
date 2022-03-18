@@ -51,10 +51,10 @@ fun LoginScreen(LocalFacebookCallbackManager: ProvidableCompositionLocal<Callbac
     val context = LocalContext.current
     Button(onClick = {
         LoginManager.getInstance()
-            .logInWithReadPermissions(context.findActivity(), Arrays.asList("public_profile"));
-        val accessToken = AccessToken.getCurrentAccessToken()
-        val isLoggedIn = accessToken != null && !accessToken.isExpired
-        Log.w("FacebookAPI","isLoggedIn: "+isLoggedIn+" "+accessToken)
+            .logInWithReadPermissions(context.findActivity(), Arrays.asList("public_profile","instagram_basic","pages_show_list","business_management","instagram_basic","pages_read_engagement","instagram_content_publish"));
+        LoginManager.getInstance()
+            .logInWithPublishPermissions(context.findActivity(), Arrays.asList("ads_management"));
+
     }) {
         Text("FB Login")
     }
