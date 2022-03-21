@@ -9,6 +9,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.fyp_20208138.ui.main.gallery.getGalery
 import com.example.fyp_20208138.ui.theme.FYP_20208138Theme
 import com.example.fyp_20208138.ui.main.nav.Nav
 import com.firebase.ui.auth.AuthUI
@@ -16,6 +17,8 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : ComponentActivity() {
@@ -45,8 +48,25 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         analytics = FirebaseAnalytics.getInstance(this)
-        signInLauncher.launch(signInIntent)
+        val user = Firebase.auth.currentUser
+        if(user != null){
+            loadData()
+            setContent {
+                FYP_20208138Theme {
+                    // A surface container using the 'background' color from the theme
+                    Surface(color = MaterialTheme.colors.background) {
+                        Nav()
+                    }
+                }
+            }
+        }else{
+            signInLauncher.launch(signInIntent)
+        }
 
+    }
+
+    private fun loadData() {
+        getGalery("https://fyp20208138-default-rtdb.asia-southeast1.firebasedatabase.app")
     }
 
 
