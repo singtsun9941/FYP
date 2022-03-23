@@ -2,8 +2,11 @@ package com.example.fyp_20208138.ui.camera
 
 import android.annotation.SuppressLint
 import android.net.Uri
+import android.util.Size
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.camera.core.AspectRatio.RATIO_16_9
+import androidx.camera.core.AspectRatio.RATIO_4_3
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -36,7 +39,8 @@ fun CameraView(onImageCaptured: (Uri, Boolean) -> Unit, onError: (ImageCaptureEx
     val context = LocalContext.current
     var lensFacing by remember { mutableStateOf(CameraSelector.LENS_FACING_BACK) }
     val imageCapture: ImageCapture = remember {
-        ImageCapture.Builder().build()
+        ImageCapture.Builder().setTargetResolution(Size(500, 400))
+            .build()
     }
     val galleryLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetContent()
