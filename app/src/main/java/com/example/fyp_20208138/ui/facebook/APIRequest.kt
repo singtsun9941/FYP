@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.example.fyp_20208138.FirebaseDatabase.addHistory
 import com.example.fyp_20208138.ui.main.gallery.GalleryViewModel
 import com.example.fyp_20208138.ui.main.gallery.getGalery
 import com.facebook.AccessToken
@@ -92,8 +93,9 @@ fun publish(igId:String,creation_id:String){
         JSONObject("{\"creation_id\":\"" +creation_id+ "\"}")
     ) {
         // Insert your code here
-        val mediaId = it.jsonObject.get("id")
+        val mediaId:String = it.jsonObject.get("id").toString()
         Log.w("FacebookAPI","mediaId: "+mediaId)
+        addHistory("IG", mediaId)
 
     }
     request.executeAsync()
