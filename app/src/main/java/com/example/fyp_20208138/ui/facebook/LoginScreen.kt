@@ -31,6 +31,7 @@ fun LoginScreen(LocalFacebookCallbackManager: ProvidableCompositionLocal<Callbac
                     val accessToken = AccessToken.getCurrentAccessToken()
                     val isLoggedIn = accessToken != null && !accessToken.isExpired
                     Log.w("FacebookAPI","isLoggedIn: "+isLoggedIn+" "+accessToken)
+                    getInfo()
                 }
 
                 override fun onCancel() {

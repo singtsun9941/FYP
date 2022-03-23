@@ -1,11 +1,9 @@
 package com.example.fyp_20208138.ui.main.nav
 
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -18,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.fyp_20208138.ui.main.gallery.Gallery
 import com.example.fyp_20208138.ui.main.home.Home
 import com.example.fyp_20208138.ui.main.userProfile.UserProfile
+import kotlinx.coroutines.launch
 
 //import com.example.fyp_20208138.ui.userProfile.UserProfile
 //import com.google.firebase.auth.FirebaseUser
@@ -27,10 +26,33 @@ import com.example.fyp_20208138.ui.main.userProfile.UserProfile
 @Composable
 fun Nav() {
     val navController = rememberNavController()
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
+    Scaffold(
+//        scaffoldState = scaffoldState,
+//        drawerContent = {
+//            // Drawer content
+//        },
 
-    Scaffold(bottomBar = {
 
-        BottomNavigation(modifier = Modifier.height(64.dp)) {
+
+//        floatingActionButton = {
+//            FloatingActionButton(onClick = { /* ... */ }) {
+//                "+"
+//            }
+//        },
+//        // Defaults to false
+//        isFloatingActionButtonDocked = true,
+//        floatingActionButtonPosition = FabPosition.Center,
+
+        bottomBar = {
+
+            BottomAppBar(
+
+                cutoutShape = MaterialTheme.shapes.small.copy(CornerSize(percent = 50)),
+
+
+        ) {
 
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentDestination = navBackStackEntry?.destination?.hierarchy
@@ -62,6 +84,17 @@ fun Nav() {
                     }
                 )
             }
+
+//                ExtendedFloatingActionButton(
+//                    text = { Text("Profile") },
+//                    onClick = {
+//                        scope.launch {
+//                            scaffoldState.drawerState.apply {
+//                                if (isClosed) open() else close()
+//                            }
+//                        }
+//                    }
+//                )
 
         }
 

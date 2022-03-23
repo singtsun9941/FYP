@@ -1,25 +1,35 @@
 package com.example.fyp_20208138.ui.main.gallery
 
 
+import android.content.Context
+import android.content.Intent
 import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.material.Card
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
+import com.example.fyp_20208138.FacebookActivity
 import com.example.fyp_20208138.FirebaseDatabase.Picture
+import com.example.fyp_20208138.PictureDetailActivity
 import com.example.fyp_20208138.R
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -35,35 +45,56 @@ import org.json.JSONObject
 import java.util.*
 
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, androidx.compose.animation.ExperimentalAnimationApi::class)
 @Composable
 fun Gallery() {
     val context = LocalContext.current
     val databaseURL = context.getResources().getString(R.string.databaseURL)
+    val pics = GalleryViewModel.pic.value
+    val picNames = GalleryViewModel.picNames.value
 
+    var visible by remember { mutableStateOf(true) }
+    val density = LocalDensity.current
 //    getGalery(databaseURL)
 
     Scaffold(topBar = { TopAppBar(title = { Text("Gallery") }) }) {
-        Text("Hello World")
-        LazyVerticalGrid(
-            cells = GridCells.Adaptive(minSize = 128.dp)
-        ) {
-            items(4){
+        Column {
+            Text("${picNames.length()} Pictures Founded")
+            LazyVerticalGrid(
+                cells = GridCells.Adaptive(minSize = 128.dp)
+            ) {
+                items(picNames.length()) { index ->
+                    val picId = picNames[index].toString()
+                    var pic: JSONObject = pics.getJSONObject(picId)
+                    var url: String = pic.get("url").toString()
 
-                Text(GalleryViewModel.pic.value.toString())
+                    showPic(picId, url, context)
+                }
 
-//                showPic()
             }
-
         }
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun showPic() {
-    Image(
-        painter = rememberImagePainter("https://firebasestorage.googleapis.com/v0/b/fyp20208138.appspot.com/o/images%2Fmountains.jpg?alt=media&token=a4fc5e43-9517-480a-b372-ce23594478ff"),
-        contentDescription = null,
-        modifier = Modifier.size(128.dp)
-    )
+private fun showPic(picId:String, url: String, context: Context) {
+    Log.w("getGallery", "url"+url)
+    Spacer(Modifier.height(8.dp))
+    ListItem(secondaryText = {
+        Card(elevation = 8.dp) {
+            Image(
+                painter = rememberImagePainter(url),
+                contentDescription = null,
+                modifier = Modifier.size(128.dp)
+            )
+        }
+    }, modifier = Modifier.clickable {
+        context.startActivity(Intent(context, PictureDetailActivity::class.java).putExtra("picId",picId))
+
+    }
+    ){
+//                    Text(item.name)
+    }
+
 }

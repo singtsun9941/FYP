@@ -93,18 +93,13 @@ fun uploadImage(uri:Uri, labels: List<ImageLabel>, databaseUrl: String): Uri? {
         // ...
         Log.w("Firebase_Storage","successful uploads")
 
-    }
-
-    val ref = storageRef.child("images/mountains.jpg")
-    uploadTask = ref.putFile(uri)
-
-    val urlTask = uploadTask.continueWithTask { task ->
+    }.continueWithTask { task ->
         if (!task.isSuccessful) {
             task.exception?.let {
                 throw it
             }
         }
-        ref.downloadUrl
+        riversRef.downloadUrl
     }.addOnCompleteListener { task ->
         if (task.isSuccessful) {
             downloadUri = task.result

@@ -55,15 +55,17 @@ fun getGalery(
             Log.w("getGallery", "json"+ value.toString())
             // ...
 
-            val json = Gson().toJson(value)
-            val jsonObject = JSONObject(json)
-            Log.w("getGallery", "pictureList"+ jsonObject.get("-MyfeG_Sm23temcUEum0"))
-            Log.w("getGallery", ""+jsonObject.names())
+            if (value!= null) {
+                val json = Gson().toJson(value)
+                val jsonObject = JSONObject(json)
 
-            val jsonArray = jsonObject.names()
+                Log.w("getGallery", "" + jsonObject.names())
 
-            GalleryViewModel.picNames = mutableStateOf(jsonArray)
-            GalleryViewModel.pic = mutableStateOf(jsonObject)
+                val jsonArray = jsonObject.names()
+
+                GalleryViewModel.picNames = mutableStateOf(jsonArray)
+                GalleryViewModel.pic = mutableStateOf(jsonObject)
+            }
 
         }
         override fun onCancelled(databaseError: DatabaseError) {

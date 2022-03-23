@@ -75,7 +75,6 @@ private fun CameraPreviewView(
     lensFacing: Int = CameraSelector.LENS_FACING_BACK,
     cameraUIAction: (CameraUIAction) -> Unit
 ) {
-
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
