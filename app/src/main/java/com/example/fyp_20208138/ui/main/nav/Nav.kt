@@ -101,7 +101,7 @@ fun Nav() {
     }) { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = "home",
+            startDestination = "gallery",
         ) {
             composable("home") { Home() }
             composable("gallery") { Gallery() }
@@ -122,7 +122,7 @@ data class NavItem(
         val data = listOf(
             NavItem("home", android.R.drawable.btn_star_big_off, "Home"),
             NavItem("gallery", android.R.drawable.btn_star_big_off, "Gallery"),
-            NavItem("profile", android.R.drawable.btn_star_big_off, "Profile"),
+//            NavItem("profile", android.R.drawable.btn_star_big_off, "Profile"),
 
             )
     }

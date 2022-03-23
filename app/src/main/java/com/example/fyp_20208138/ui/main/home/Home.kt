@@ -26,9 +26,6 @@ fun Home() {
     val context = LocalContext.current
     Scaffold(
 
-
-
-
         topBar = { TopAppBar(title = { Text("Home") }) }
 
     ) {

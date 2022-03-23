@@ -2,8 +2,17 @@ package com.example.fyp_20208138.ui.facebook
 
 import android.os.Bundle
 import android.util.Log
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
+import com.example.fyp_20208138.ui.main.gallery.GalleryViewModel
+import com.example.fyp_20208138.ui.main.gallery.getGalery
 import com.facebook.AccessToken
 import com.facebook.GraphRequest
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.reflect.TypeToken
+import org.json.JSONArray
 import org.json.JSONObject
 
 
@@ -12,8 +21,11 @@ fun getInfo(){
         AccessToken.getCurrentAccessToken()
     ) { `object`, response ->
         // Insert your code here
+        Log.w("FacebookAPI","response: "+response)
+        var jsonObject = response.jsonObject
+        Log.w("FacebookAPI","getInfo: "+jsonObject)
+//        var jsonObject = response.jsonObject
 
-        Log.w("FacebookAPI","getInfo: "+response)
     }
 
     val parameters = Bundle()
@@ -28,17 +40,30 @@ fun getPages(){
         "/me/accounts"
     ) {
         // Insert your code here
+        Log.w("FacebookAPI","response: "+it)
+        Log.w("FacebookAPI","getInfo: "+it.jsonObject)
+//        PageListModel.pageList = mutableStateOf(it.jsonObject)
+        var pageList:List<Page> = Gson().fromJson(it.jsonObject.get("data").toString(), object : TypeToken<List<Page>>() {}.type)
+        Log.w("FacebookAPI","pageList[0]: "+pageList.toString())
+        val mutablePage:MutableList<Page> = mutableListOf<Page>().apply {addAll(pageList)}
+        PageListModel.pageList = mutablePage
+
+
     }
 
     request.executeAsync()
 }
 
-fun getPageDetail(pageId:String){
+fun getPageDetail(pageId:String, url: String ){
     val request = GraphRequest.newGraphPathRequest(
         AccessToken.getCurrentAccessToken(),
         "/"+pageId
     ) {
         // Insert your code here
+        //jsonObject.name() cehck instagram_business_account
+        val igId = JSONObject(it.jsonObject.get("instagram_business_account").toString()).get("id").toString()
+        Log.w("FacebookAPI","igId: "+igId)
+        post(igId, url)
     }
 
     val parameters = Bundle()
@@ -54,6 +79,22 @@ fun post(igId:String, url:String){
         JSONObject("{\"image_url\":\"" + url+ "\"}")
     ) {
         // Insert your code here
+        val creation_id = it.jsonObject.get("id").toString()
+        Log.w("FacebookAPI","creation_id: "+creation_id)
+        publish(igId, creation_id)
+    }
+    request.executeAsync()
+}
+fun publish(igId:String,creation_id:String){
+    val request = GraphRequest.newPostRequest(
+        AccessToken.getCurrentAccessToken(),
+        "/"+igId+"/media_publish",
+        JSONObject("{\"creation_id\":\"" +creation_id+ "\"}")
+    ) {
+        // Insert your code here
+        val mediaId = it.jsonObject.get("id")
+        Log.w("FacebookAPI","mediaId: "+mediaId)
+
     }
     request.executeAsync()
 }

@@ -31,9 +31,7 @@ import java.io.File
 object GalleryViewModel: ViewModel() {
     var picNames:MutableState<JSONArray> = mutableStateOf(JSONArray())
     var pic:MutableState<JSONObject> = mutableStateOf(JSONObject())
-    init {
-        getGalery("https://fyp20208138-default-rtdb.asia-southeast1.firebasedatabase.app")
-    }
+
 }
 
 fun test():String{
