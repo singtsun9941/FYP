@@ -15,6 +15,7 @@ import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import org.json.JSONArray
 import org.json.JSONObject
+import java.lang.Exception
 
 
 fun getInfo(){
@@ -49,22 +50,31 @@ fun getPages(){
         val mutablePage:MutableList<Page> = mutableListOf<Page>().apply {addAll(pageList)}
         PageListModel.pageList = mutablePage
 
+        loadIgId(mutablePage)
+
 
     }
 
     request.executeAsync()
 }
 
-fun getPageDetail(pageId:String, url: String ){
+//fun getPageDetail(pageId:String, url: String ){
+fun getPageDetail(page: Page, pageId:String){
     val request = GraphRequest.newGraphPathRequest(
         AccessToken.getCurrentAccessToken(),
         "/"+pageId
     ) {
         // Insert your code here
         //jsonObject.name() cehck instagram_business_account
-        val igId = JSONObject(it.jsonObject.get("instagram_business_account").toString()).get("id").toString()
-        Log.w("FacebookAPI","igId: "+igId)
-        post(igId, url)
+        try {
+            val igId = JSONObject(it.jsonObject.get("instagram_business_account").toString()).get("id").toString()
+            Log.w("FacebookAPI","igId: "+igId)
+            page.igId = igId
+//        post(igId, url)
+        }catch (e:Exception){
+            Log.e("FacebookAPI",e.toString())
+        }
+
     }
 
     val parameters = Bundle()
@@ -99,4 +109,10 @@ fun publish(igId:String,creation_id:String){
 
     }
     request.executeAsync()
+}
+
+fun loadIgId(mutablePage:MutableList<Page>){
+    mutablePage.forEach(){page ->
+        page.getIgId()
+    }
 }

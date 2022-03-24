@@ -20,10 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.example.fyp_20208138.R
-import com.example.fyp_20208138.ui.facebook.PageListModel
-import com.example.fyp_20208138.ui.facebook.getPageDetail
+import com.example.fyp_20208138.ui.facebook.*
 //import com.example.fyp_20208138.ui.facebook.PageListModel
-import com.example.fyp_20208138.ui.facebook.getPages
 import com.example.fyp_20208138.ui.labeling.uploadImage
 import com.google.gson.Gson
 import org.json.JSONArray
@@ -59,7 +57,11 @@ fun PictureDetail(picId:String?) {
             Log.w("getPage", "page"+ pageList[0])
             LazyColumn(modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 64.dp)) {
                 items(pageList.size){index->
-                    Text(pageList[index].name)
+                    var page = pageList[index]
+                    page.igId?.let {
+                        Text(page.name)
+                        CheckBox(page)
+                    }
                 }
             }
 
@@ -71,7 +73,13 @@ fun PictureDetail(picId:String?) {
                 Text("Back")
             }
             Button(onClick = {
-                getPageDetail(pageList[0].id, url)
+                pageList.forEach(){page ->
+                    if(page.isPost){
+                        page.igId?.let {
+                            post(it!!, url)
+                        }
+                    }
+                }
             }
             ) {
                 Text("Post")
@@ -80,4 +88,17 @@ fun PictureDetail(picId:String?) {
 
 
     }
+}
+
+@Composable
+fun CheckBox(page:Page) {
+    val checkedState = remember { mutableStateOf(page.isPost) }
+    Checkbox(
+        checked = checkedState.value,
+        onCheckedChange = {
+            checkedState.value = it
+            page.isPost = it
+            Log.w("getPage", "isPost check"+ page.isPost)
+        }
+    )
 }

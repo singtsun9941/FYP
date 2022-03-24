@@ -12,7 +12,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-data class Page (val access_token: String, val category: String,  val name: String, val id: String)
+data class Page (val access_token: String, val category: String, val name: String, val id: String, var igId: String?= null, var isPost:Boolean = false){
+    fun getIgId(){
+        Log.w("Page","init")
+        getPageDetail(this, id)
+    }
+    init {
+        Log.w("Page","init")
+        getPageDetail(this, id)
+    }
+}
 object PageListModel: ViewModel() {
     var pageList: MutableList<Page> = mutableListOf<Page>()
 }
