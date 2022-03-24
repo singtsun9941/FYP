@@ -2,20 +2,13 @@ package com.example.fyp_20208138.ui.facebook
 
 import android.os.Bundle
 import android.util.Log
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
 import com.example.fyp_20208138.FirebaseDatabase.addHistory
-import com.example.fyp_20208138.ui.main.gallery.GalleryViewModel
-import com.example.fyp_20208138.ui.main.gallery.getGalery
+import com.example.fyp_20208138.FirebaseDatabase.label
 import com.facebook.AccessToken
 import com.facebook.GraphRequest
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
-import org.json.JSONArray
 import org.json.JSONObject
-import java.lang.Exception
 
 
 fun getInfo(){
@@ -89,23 +82,23 @@ fun getPageDetail(page: Page, pageId:String){
     request.executeAsync()
 }
 
-fun post(igId:String, url:String){
+fun post(igId:String, url:String,msg:String, caption: String){
     if(AccessToken.getCurrentAccessToken() == null){
         return
     }
     val request = GraphRequest.newPostRequest(
         AccessToken.getCurrentAccessToken(),
         "/"+igId+"/media",
-        JSONObject("{\"image_url\":\"" + url+ "\"}")
+        JSONObject("{\"image_url\":\""+url+"\",\"caption\":\""+msg+" "+caption+"\"}")
     ) {
         // Insert your code here
         val creation_id = it.jsonObject.get("id").toString()
         Log.w("FacebookAPI","creation_id: "+creation_id)
-        publish(igId, creation_id)
+        publish(igId, msg, creation_id)
     }
     request.executeAsync()
 }
-fun publish(igId:String,creation_id:String){
+fun publish(igId:String,msg:String,creation_id:String){
     if(AccessToken.getCurrentAccessToken() == null){
         return
     }
@@ -117,7 +110,7 @@ fun publish(igId:String,creation_id:String){
         // Insert your code here
         val mediaId:String = it.jsonObject.get("id").toString()
         Log.w("FacebookAPI","mediaId: "+mediaId)
-        addHistory("IG", mediaId)
+        addHistory("IG",msg , mediaId)
 
     }
     request.executeAsync()

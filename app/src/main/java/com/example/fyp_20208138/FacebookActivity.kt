@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.fyp_20208138.ui.facebook.LoginScreen
 import com.example.fyp_20208138.ui.facebook.LoginScreen
+import com.example.fyp_20208138.ui.facebook.ShowInfo
 import com.example.fyp_20208138.ui.theme.FYP_20208138Theme
 import com.facebook.CallbackManager
 import com.facebook.FacebookSdk
@@ -24,7 +25,9 @@ import com.facebook.login.widget.LoginButton
 
 class FacebookActivity : ComponentActivity() {
     var callbackManager = CallbackManager.Factory.create();
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        val isLinked = intent.getStringExtra("isLinked")
         super.onCreate(savedInstanceState)
 
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -39,10 +42,14 @@ class FacebookActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    CompositionLocalProvider(
-                        LocalFacebookCallbackManager provides callbackManager
-                    ) {
-                        LoginScreen(LocalFacebookCallbackManager)
+                    if (isLinked != "true") {
+                        CompositionLocalProvider(
+                            LocalFacebookCallbackManager provides callbackManager
+                        ) {
+                            LoginScreen(LocalFacebookCallbackManager)
+                        }
+                    }else{
+                        ShowInfo()
                     }
                 }
             }

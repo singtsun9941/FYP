@@ -18,6 +18,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,6 +33,8 @@ import com.example.fyp_20208138.FacebookActivity
 import com.example.fyp_20208138.FirebaseDatabase.Picture
 import com.example.fyp_20208138.PictureDetailActivity
 import com.example.fyp_20208138.R
+import com.example.fyp_20208138.ui.main.topbar
+import com.example.fyp_20208138.ui.main.userProfile.DrawerProfile
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -40,6 +44,7 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -57,7 +62,30 @@ fun Gallery() {
     val density = LocalDensity.current
 //    getGalery(databaseURL)
 
-    Scaffold(topBar = { TopAppBar(title = { Text("Gallery") }) }) {
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
+
+    Scaffold(
+        scaffoldState = scaffoldState,
+        drawerContent = {
+            DrawerProfile(context = context)
+        },
+        topBar = {
+            TopAppBar(
+                title = { Text("Gallery" )},
+                actions = {
+                    IconButton(onClick = {
+                        scope.launch {
+                            scaffoldState.drawerState.apply {
+                                if (isClosed) open() else close()
+                            }
+                        }
+                    }) {
+                        Icon(Icons.Filled.AccountBox, "Account")
+                    }
+                },
+            )
+        }) {
         Column {
             Text("${picNames.length()} Pictures Founded")
             LazyVerticalGrid(

@@ -32,9 +32,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun Nav() {
     val navController = rememberNavController()
-    val scaffoldState = rememberScaffoldState()
-    val scope = rememberCoroutineScope()
     val context = LocalContext.current
+
     Scaffold(
 
         floatingActionButton = {

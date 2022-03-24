@@ -10,7 +10,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 @IgnoreExtraProperties
-data class History(val socialMedia: String? = null, var refId: String? = null) {
+data class History(val socialMedia: String? = null,var msg:String? = null, var refId: String? = null) {
 
 }
 

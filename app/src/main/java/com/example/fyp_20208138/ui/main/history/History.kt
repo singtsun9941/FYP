@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -19,6 +21,8 @@ import com.example.fyp_20208138.FacebookActivity
 import com.example.fyp_20208138.FirebaseDatabase.HistoryViewModel
 import com.example.fyp_20208138.ui.main.gallery.CheckBox
 import com.example.fyp_20208138.ui.main.gallery.GalleryViewModel
+import com.example.fyp_20208138.ui.main.topbar
+import kotlinx.coroutines.launch
 
 import org.json.JSONObject
 
@@ -27,9 +31,31 @@ fun History() {
     val context = LocalContext.current
     val historyIds = HistoryViewModel.historyId.value
     val historys = HistoryViewModel.history.value
-    Scaffold(
 
-        topBar = { TopAppBar(title = { Text("History") }) }
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
+
+    Scaffold(
+        scaffoldState = scaffoldState,
+        drawerContent = {
+
+        },
+        topBar = {
+            TopAppBar(
+                title = { Text("History" )},
+                actions = {
+                    IconButton(onClick = {
+                        scope.launch {
+                            scaffoldState.drawerState.apply {
+                                if (isClosed) open() else close()
+                            }
+                        }
+                    }) {
+                        Icon(Icons.Filled.AccountBox, "Account")
+                    }
+                },
+            )
+        }
 
     ) {
         LazyColumn(modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 64.dp)) {
