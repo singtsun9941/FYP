@@ -14,6 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.fyp_20208138.ui.main.gallery.Gallery
+import com.example.fyp_20208138.ui.main.history.History
 import com.example.fyp_20208138.ui.main.home.Home
 import com.example.fyp_20208138.ui.main.userProfile.UserProfile
 import kotlinx.coroutines.launch
@@ -106,6 +107,7 @@ fun Nav() {
             composable("home") { Home() }
             composable("gallery") { Gallery() }
             composable("profile") { UserProfile() }
+            composable("history") { History() }
 
         }
     }
@@ -120,8 +122,9 @@ data class NavItem(
 ) {
     companion object {
         val data = listOf(
-            NavItem("home", android.R.drawable.btn_star_big_off, "Home"),
-            NavItem("gallery", android.R.drawable.btn_star_big_off, "Gallery"),
+            NavItem("gallery", android.R.drawable.ic_menu_gallery, "Gallery"),
+            NavItem("history", android.R.drawable.ic_menu_recent_history, "history"),
+//            NavItem("home", android.R.drawable.ic_menu_recent_history, "Home"),
 //            NavItem("profile", android.R.drawable.btn_star_big_off, "Profile"),
 
             )

@@ -9,6 +9,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.fyp_20208138.FirebaseDatabase.getHistory
 import com.example.fyp_20208138.ui.facebook.getPages
 import com.example.fyp_20208138.ui.main.gallery.getGalery
 import com.example.fyp_20208138.ui.theme.FYP_20208138Theme
@@ -21,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+import java.util.Timer
+import kotlin.concurrent.schedule
 
 class MainActivity : ComponentActivity() {
 
@@ -52,14 +55,18 @@ class MainActivity : ComponentActivity() {
         val user = Firebase.auth.currentUser
         if(user != null){
             loadData()
-            setContent {
-                FYP_20208138Theme {
-                    // A surface container using the 'background' color from the theme
-                    Surface(color = MaterialTheme.colors.background) {
-                        Nav()
+
+                setContent {
+                    FYP_20208138Theme {
+                        // A surface container using the 'background' color from the theme
+                        Surface(color = MaterialTheme.colors.background) {
+
+                            Nav()
+
+                        }
                     }
                 }
-            }
+
         }else{
             signInLauncher.launch(signInIntent)
         }
@@ -67,7 +74,9 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun loadData() {
-        getGalery("https://fyp20208138-default-rtdb.asia-southeast1.firebasedatabase.app")
+        val databaseUrl:String = "https://fyp20208138-default-rtdb.asia-southeast1.firebasedatabase.app"
+        getGalery(databaseUrl)
+        getHistory(databaseUrl)
         getPages()
     }
 

@@ -54,7 +54,7 @@ fun PictureDetail(picId:String?) {
                 modifier = Modifier.size(128.dp)
             )
 
-            Log.w("getPage", "page"+ pageList[0])
+
             LazyColumn(modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 64.dp)) {
                 items(pageList.size){index->
                     var page = pageList[index]

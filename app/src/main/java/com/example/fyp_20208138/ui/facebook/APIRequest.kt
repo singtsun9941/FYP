@@ -37,6 +37,9 @@ fun getInfo(){
 }
 
 fun getPages(){
+    if(AccessToken.getCurrentAccessToken() == null){
+        return
+    }
     val request = GraphRequest.newGraphPathRequest(
         AccessToken.getCurrentAccessToken(),
         "/me/accounts"
@@ -60,6 +63,9 @@ fun getPages(){
 
 //fun getPageDetail(pageId:String, url: String ){
 fun getPageDetail(page: Page, pageId:String){
+    if(AccessToken.getCurrentAccessToken() == null){
+        return
+    }
     val request = GraphRequest.newGraphPathRequest(
         AccessToken.getCurrentAccessToken(),
         "/"+pageId
@@ -84,6 +90,9 @@ fun getPageDetail(page: Page, pageId:String){
 }
 
 fun post(igId:String, url:String){
+    if(AccessToken.getCurrentAccessToken() == null){
+        return
+    }
     val request = GraphRequest.newPostRequest(
         AccessToken.getCurrentAccessToken(),
         "/"+igId+"/media",
@@ -97,6 +106,9 @@ fun post(igId:String, url:String){
     request.executeAsync()
 }
 fun publish(igId:String,creation_id:String){
+    if(AccessToken.getCurrentAccessToken() == null){
+        return
+    }
     val request = GraphRequest.newPostRequest(
         AccessToken.getCurrentAccessToken(),
         "/"+igId+"/media_publish",
@@ -112,6 +124,9 @@ fun publish(igId:String,creation_id:String){
 }
 
 fun loadIgId(mutablePage:MutableList<Page>){
+    if(AccessToken.getCurrentAccessToken() == null){
+        return
+    }
     mutablePage.forEach(){page ->
         page.getIgId()
     }
