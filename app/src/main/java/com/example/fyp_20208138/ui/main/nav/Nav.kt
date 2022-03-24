@@ -1,10 +1,14 @@
 package com.example.fyp_20208138.ui.main.nav
 
+import android.content.Intent
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -13,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.fyp_20208138.CameraActivity
 import com.example.fyp_20208138.ui.main.gallery.Gallery
 import com.example.fyp_20208138.ui.main.history.History
 import com.example.fyp_20208138.ui.main.home.Home
@@ -29,22 +34,16 @@ fun Nav() {
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
     Scaffold(
-//        scaffoldState = scaffoldState,
-//        drawerContent = {
-//            // Drawer content
-//        },
 
-
-
-//        floatingActionButton = {
-//            FloatingActionButton(onClick = { /* ... */ }) {
-//                "+"
-//            }
-//        },
-//        // Defaults to false
-//        isFloatingActionButtonDocked = true,
-//        floatingActionButtonPosition = FabPosition.Center,
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                context.startActivity(Intent(context, CameraActivity::class.java))
+            } ) {
+                Icon(Icons.Filled.Add,"")
+            }
+        },
 
         bottomBar = {
 

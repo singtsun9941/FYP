@@ -16,6 +16,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FYP_20208138">
         <activity
+            android:name=".StartActivity"
+            android:exported="true"
+            android:label="@string/title_activity_start"
+            android:theme="@style/Theme.FYP_20208138">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".PictureDetailActivity"
             android:exported="false"
             android:label="@string/title_activity_picture_detail"
