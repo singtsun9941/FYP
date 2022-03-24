@@ -112,7 +112,7 @@ fun PictureDetail(picId:String?) {
                         if(page.isPost){
                             page.igId?.let {
                                 Log.w("Post", "msg"+ msg)
-                                post(it!!, url , msg+toCaption(labels))
+                                post(it!!, url , msg, toCaption(labels))
                             }
                         }
                     }
