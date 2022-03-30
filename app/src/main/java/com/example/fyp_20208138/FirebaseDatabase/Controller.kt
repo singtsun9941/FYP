@@ -12,12 +12,18 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun addHistory(postFrom:String,msg:String, mediaId:String){
     val googleUser = Firebase.auth.currentUser
     val database = Firebase.database("https://fyp20208138-default-rtdb.asia-southeast1.firebasedatabase.app")
     val myRef = database.getReference("Users/"+ googleUser?.uid + "/History").push()
-    val pic = History(postFrom, msg,mediaId)
+    val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+    val currentDate = sdf.format(Date())
+    System.out.println(" C DATE is  "+currentDate)
+
+    val pic = History(postFrom, msg,mediaId, currentDate)
     myRef.setValue(pic)
 }
 

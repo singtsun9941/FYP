@@ -64,8 +64,10 @@ fun History() {
                 var history: JSONObject = historys.getJSONObject(historyId)
                 var refId: String = history.get("refId").toString()
                 var socialMedia: String = history.get("socialMedia").toString()
+                var date: String = history.get("date").toString()
+                var msg: String = history.get("msg").toString()
 
-                showHistory(socialMedia, refId)
+                showHistory(socialMedia, refId, date, msg)
 
             }
         }
@@ -75,14 +77,22 @@ fun History() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun showHistory(socialMedia:String , refId: String){
+fun showHistory(socialMedia:String , refId: String, date:String , msg:String){
     ListItem(secondaryText = {
 //                    Text((item.latitude).toString())
     }, modifier = Modifier.clickable {
 
     }) {
-        Text(text = socialMedia)
-        Text(text = refId)
+        Row() {
+            Text(text = date)
+            Text(text = msg)
+        }
+
+        Row() {
+            Text(text = socialMedia)
+            Text(text = refId)
+        }
+
     }
     Divider()
 

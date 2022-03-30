@@ -4,9 +4,7 @@ import android.app.Activity
 import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -36,11 +34,14 @@ fun Selectlabel(labels:(List<ImageLabel>), uri:Uri){
     val activity = (context as? Activity)
     val databaseUrl = context.getResources().getString(R.string.databaseURL)
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        modifier = Modifier
+        .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
             painter = rememberImagePainter(uri),
             contentDescription = null,
-            modifier = Modifier.size(128.dp)
+            modifier = Modifier.size(200.dp)
         )
 
         labels.forEach{imageLabel ->
@@ -49,19 +50,25 @@ fun Selectlabel(labels:(List<ImageLabel>), uri:Uri){
                 Text(imageLabel.confidence.toString())
             }
         }
-        Button(onClick = {
-            if (activity != null) {
-                activity.finish()
+        Row() {
+            Button(onClick = {
+                if (activity != null) {
+                    activity.finish()
+                }
+            }) {
+                Text("Cancel")
             }
-        }) {
-            Text("Cancel")
+            Spacer(modifier = Modifier.width(30.dp))
+            Button(onClick = {
+                uploadImage(uri, labels, databaseUrl)
+                if (activity != null) {
+                    activity.finish()
+                }
+            }) {
+                Text("Save")
+            }
         }
-        Button(onClick = {
-//            uploadImage(uri, labels)
-            uploadImage(uri, labels, databaseUrl)
-        }) {
-            Text("Save")
-        }
+
 
 
     }

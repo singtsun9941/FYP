@@ -3,9 +3,9 @@ package com.example.fyp_20208138.ui.facebook
 import android.os.Bundle
 import android.util.Log
 import com.example.fyp_20208138.FirebaseDatabase.addHistory
-import com.example.fyp_20208138.FirebaseDatabase.label
 import com.facebook.AccessToken
 import com.facebook.GraphRequest
+import com.facebook.Profile
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import org.json.JSONObject
@@ -123,4 +123,20 @@ fun loadIgId(mutablePage:MutableList<Page>){
     mutablePage.forEach(){page ->
         page.getIgId()
     }
+}
+
+fun getUserIcon(fbId:String){
+    val request = GraphRequest.newGraphPathRequest(
+        AccessToken.getCurrentAccessToken(),
+        "/"+fbId+"/picture"
+    ) {
+        // Insert your code here
+    }
+
+    val parameters = Bundle()
+    parameters.putString("type", "square")
+    request.parameters = parameters
+    request.executeAsync()
+
+
 }

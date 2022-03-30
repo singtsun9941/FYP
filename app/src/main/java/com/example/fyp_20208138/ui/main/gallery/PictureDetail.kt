@@ -116,6 +116,9 @@ fun PictureDetail(picId:String?) {
                             }
                         }
                     }
+                    if (activity != null) {
+                        activity.finish()
+                    }
                 }
                 ) {
                     Text("Post")
