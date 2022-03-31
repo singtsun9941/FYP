@@ -25,6 +25,7 @@ import com.example.fyp_20208138.ui.facebook.getComment
 import com.example.fyp_20208138.ui.main.gallery.CheckBox
 import com.example.fyp_20208138.ui.main.gallery.GalleryViewModel
 import com.example.fyp_20208138.ui.main.topbar
+import com.example.fyp_20208138.ui.main.userProfile.DrawerProfile
 import kotlinx.coroutines.launch
 
 import org.json.JSONObject
@@ -43,7 +44,7 @@ fun History() {
     Scaffold(
         scaffoldState = scaffoldState,
         drawerContent = {
-
+            DrawerProfile(context = context)
         },
         topBar = {
             TopAppBar(
