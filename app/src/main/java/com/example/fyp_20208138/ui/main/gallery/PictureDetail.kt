@@ -28,6 +28,8 @@ import com.google.gson.reflect.TypeToken
 import com.google.mlkit.vision.label.ImageLabel
 import org.json.JSONArray
 import org.json.JSONObject
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -183,7 +185,9 @@ fun labelFromAI(labels:List<label>){
                 Spacer(modifier = Modifier.width(30.dp))
                 Text(text = label.text)
                 Spacer(modifier = Modifier.width(30.dp))
-                Text(text = label.confidence)
+                val format = DecimalFormat("0.##")
+                format.roundingMode = RoundingMode.FLOOR
+                Text(format.format(label.confidence.toDouble()))
             }
 
         }

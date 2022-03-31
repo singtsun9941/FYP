@@ -30,6 +30,8 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.google.mlkit.vision.label.ImageLabel
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -51,10 +53,15 @@ fun Selectlabel(labels:(List<ImageLabel>), uri:Uri){
             modifier = Modifier.size(200.dp)
         )
 
+
+        Spacer(modifier = Modifier.height(30.dp))
         labels.forEach{imageLabel ->
             Row() {
                 Text(imageLabel.text)
-                Text(imageLabel.confidence.toString())
+                Spacer(modifier = Modifier.width(30.dp))
+                val format = DecimalFormat("0.###")
+                format.roundingMode = RoundingMode.FLOOR
+                Text(format.format(imageLabel.confidence.toDouble()))
             }
         }
         Row() {
