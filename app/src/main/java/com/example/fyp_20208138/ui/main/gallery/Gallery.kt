@@ -11,10 +11,7 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.*
@@ -66,6 +63,7 @@ fun Gallery() {
     val scope = rememberCoroutineScope()
 
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
         scaffoldState = scaffoldState,
         drawerContent = {
             DrawerProfile(context = context)

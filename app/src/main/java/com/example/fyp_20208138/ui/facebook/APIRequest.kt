@@ -5,9 +5,9 @@ import android.util.Log
 import com.example.fyp_20208138.FirebaseDatabase.addHistory
 import com.facebook.AccessToken
 import com.facebook.GraphRequest
-import com.facebook.Profile
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import org.json.JSONArray
 import org.json.JSONObject
 
 
@@ -139,4 +139,29 @@ fun getUserIcon(fbId:String){
     request.executeAsync()
 
 
+}
+
+fun getComment(igId:String?){
+    if(AccessToken.getCurrentAccessToken() == null){
+        return
+    }
+    val request = GraphRequest.newGraphPathRequest(
+        AccessToken.getCurrentAccessToken(),
+        "/"+igId+"/comments"
+    ) {
+        // Insert your code here
+        try {
+            var commentList:List<Comment> = Gson().fromJson(it.jsonObject.get("data").toString(), object : TypeToken<List<Comment>>() {}.type)
+            Log.w("FacebookAPI","comment: "+commentList[0].text)
+            val mutablePage:MutableList<Comment> = mutableListOf<Comment>().apply {addAll(commentList)}
+            CommentListModel.commentList = mutablePage
+
+//        post(igId, url)
+        }catch (e:Exception){
+            Log.e("FacebookAPI",e.toString())
+        }
+
+    }
+
+    request.executeAsync()
 }

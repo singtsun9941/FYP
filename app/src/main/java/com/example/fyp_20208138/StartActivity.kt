@@ -108,7 +108,7 @@ class StartActivity : ComponentActivity() {
 fun Greeting5(name: String) {
     val context = LocalContext.current
     Text(text = " $name!")
-    Timer().schedule(5000) {
+    Timer().schedule(2000) {
         context.startActivity(Intent(context, MainActivity::class.java))
     }
 }

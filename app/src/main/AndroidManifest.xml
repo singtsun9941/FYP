@@ -16,6 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FYP_20208138">
         <activity
+            android:name=".ShowCommentActivity"
+            android:exported="false"
+            android:label="@string/title_activity_show_comment"
+            android:theme="@style/Theme.FYP_20208138" />
+        <activity
             android:name=".StartActivity"
             android:exported="true"
             android:label="@string/title_activity_start"

@@ -1,5 +1,6 @@
 package com.example.fyp_20208138.ui.main.history
 
+import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -19,12 +20,17 @@ import androidx.compose.ui.unit.dp
 import com.example.fyp_20208138.CameraActivity
 import com.example.fyp_20208138.FacebookActivity
 import com.example.fyp_20208138.FirebaseDatabase.HistoryViewModel
+import com.example.fyp_20208138.MainActivity
+import com.example.fyp_20208138.ShowCommentActivity
+import com.example.fyp_20208138.ui.facebook.getComment
 import com.example.fyp_20208138.ui.main.gallery.CheckBox
 import com.example.fyp_20208138.ui.main.gallery.GalleryViewModel
 import com.example.fyp_20208138.ui.main.topbar
 import kotlinx.coroutines.launch
 
 import org.json.JSONObject
+import java.util.*
+import kotlin.concurrent.schedule
 
 @Composable
 fun History() {
@@ -67,7 +73,7 @@ fun History() {
                 var date: String = history.get("date").toString()
                 var msg: String = history.get("msg").toString()
 
-                showHistory(socialMedia, refId, date, msg)
+                showHistory(socialMedia, refId, date, msg, context)
 
             }
         }
@@ -77,10 +83,16 @@ fun History() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun showHistory(socialMedia:String , refId: String, date:String , msg:String){
+fun showHistory(socialMedia:String , refId: String, date:String , msg:String, context:Context){
+
+
     ListItem(secondaryText = {
 //                    Text((item.latitude).toString())
     }, modifier = Modifier.clickable {
+        getComment(refId)
+        Timer().schedule(2000) {
+            context.startActivity(Intent(context, ShowCommentActivity::class.java))
+        }
 
     }) {
         Row() {

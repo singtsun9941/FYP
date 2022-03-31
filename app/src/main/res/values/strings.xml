@@ -9,4 +9,5 @@
     <string name="fb_login_protocol_scheme">fb1015696059368473</string>
     <string name="title_activity_picture_detail">PictureDetailActivity</string>
     <string name="title_activity_start">StartActivity</string>
+    <string name="title_activity_show_comment">ShowCommentActivity</string>
 </resources>
