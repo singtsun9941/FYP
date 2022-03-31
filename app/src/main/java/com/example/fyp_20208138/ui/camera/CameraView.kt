@@ -20,6 +20,9 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.AccountBox
+import androidx.compose.material.icons.sharp.AddCircle
+import androidx.compose.material.icons.sharp.ArrowBack
+import androidx.compose.material.icons.sharp.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -128,14 +131,14 @@ fun CameraControls(cameraUIAction: (CameraUIAction) -> Unit) {
     ) {
 
         CameraControl(
-            Icons.Sharp.AccountBox,
+            Icons.Sharp.ArrowBack,
             R.string.icn_camera_view_switch_camera_content_description,
             modifier= Modifier.size(64.dp),
             onClick = { cameraUIAction(CameraUIAction.OnSwitchCameraClick) }
         )
 
         CameraControl(
-            Icons.Sharp.AccountBox,
+            Icons.Sharp.AddCircle,
             R.string.icn_camera_view_camera_shutter_content_description,
             modifier= Modifier
                 .size(64.dp)
@@ -145,7 +148,7 @@ fun CameraControls(cameraUIAction: (CameraUIAction) -> Unit) {
         )
 
         CameraControl(
-            Icons.Sharp.AccountBox,
+            Icons.Sharp.Menu,
             R.string.icn_camera_view_view_gallery_content_description,
             modifier= Modifier.size(64.dp),
             onClick = { cameraUIAction(CameraUIAction.OnGalleryViewClick) }

@@ -52,7 +52,7 @@ fun LoginScreen(LocalFacebookCallbackManager: ProvidableCompositionLocal<Callbac
     val context = LocalContext.current
     Button(onClick = {
         LoginManager.getInstance()
-            .logInWithReadPermissions(context.findActivity(), Arrays.asList("public_profile","instagram_basic","pages_show_list","business_management","instagram_basic","pages_read_engagement","instagram_content_publish"));
+            .logInWithReadPermissions(context.findActivity(), Arrays.asList("public_profile","instagram_basic","pages_show_list","business_management","instagram_basic","pages_read_engagement","instagram_content_publish","instagram_manage_comments"));
         LoginManager.getInstance()
             .logInWithPublishPermissions(context.findActivity(), Arrays.asList("ads_management"));
 

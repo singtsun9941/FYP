@@ -23,10 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.fyp_20208138.ui.facebook.Comment
-import com.example.fyp_20208138.ui.facebook.CommentListModel
-import com.example.fyp_20208138.ui.facebook.PageListModel
-import com.example.fyp_20208138.ui.facebook.getComment
+import com.example.fyp_20208138.ui.facebook.*
 import com.example.fyp_20208138.ui.theme.FYP_20208138Theme
 import java.util.*
 import kotlin.concurrent.schedule
@@ -87,6 +84,9 @@ fun showComment(commentList:MutableList<Comment> , index:Int) {
         ) {
             Text(text = commentList[index].text)
             Text(text = commentList[index].timestamp)
+            Text(text = commentList[index].id)
+            Log.i("reply","id: " + commentList[index].id)
+
         }
     }
     replyDialog(commentList[index].text, commentList[index].id,  openDialog)
@@ -132,7 +132,7 @@ fun replyDialog(msg:String, mediaId:String, openDialog: MutableState<Boolean>) {
                             onClick = {
                                 openDialog.value = false
                                 Log.i("reply","msg: : " + replyMsg.value)
-
+                                replyFacebookComment(mediaId, replyMsg.value)
                             }) {
                             Text("Reply")
                         }

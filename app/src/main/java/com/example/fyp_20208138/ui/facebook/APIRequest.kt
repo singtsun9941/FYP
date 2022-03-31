@@ -7,7 +7,6 @@ import com.facebook.AccessToken
 import com.facebook.GraphRequest
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.json.JSONArray
 import org.json.JSONObject
 
 
@@ -165,5 +164,16 @@ fun getComment(igId:String?){
 
     }
 
+    request.executeAsync()
+}
+
+fun replyFacebookComment(commentId:String, msg:String ){
+    val request = GraphRequest.newPostRequest(
+        AccessToken.getCurrentAccessToken(),
+        "/"+commentId+"/replies",
+        JSONObject("{\"message\":\""+msg+"\"}")
+    ) {
+        // Insert your code here
+    }
     request.executeAsync()
 }
