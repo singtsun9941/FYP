@@ -69,7 +69,7 @@ fun Selectlabel(labels:(List<ImageLabel>), uri:Uri){
             Button(onClick = {
                 openDialog.value = true
                 uploadImage(uri, labels, databaseUrl)
-                Timer().schedule(2000) {
+                Timer().schedule(4000) {
                     openDialog.value = false
                     if (activity != null) {
                         activity.finish()

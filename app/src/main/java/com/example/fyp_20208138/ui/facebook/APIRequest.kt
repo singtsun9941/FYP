@@ -160,6 +160,7 @@ fun getComment(igId:String?){
 //        post(igId, url)
         }catch (e:Exception){
             Log.e("FacebookAPI",e.toString())
+            CommentListModel.commentList = mutableListOf<Comment>()
         }
 
     }
