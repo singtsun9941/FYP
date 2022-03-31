@@ -11,8 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -78,6 +77,10 @@ fun History() {
             }
         }
 
+
+
+
+
     }
 }
 
@@ -85,12 +88,15 @@ fun History() {
 @Composable
 fun showHistory(socialMedia:String , refId: String, date:String , msg:String, context:Context){
 
+    val openDialog = remember { mutableStateOf(false)  }
 
     ListItem(secondaryText = {
 //                    Text((item.latitude).toString())
     }, modifier = Modifier.clickable {
         getComment(refId)
+        openDialog.value = true
         Timer().schedule(2000) {
+            openDialog.value = false
             context.startActivity(Intent(context, ShowCommentActivity::class.java))
         }
 
@@ -110,4 +116,39 @@ fun showHistory(socialMedia:String , refId: String, date:String , msg:String, co
 
 
 
+    LoadingDialog(openDialog)
+
+
+
+}
+
+@Composable
+fun LoadingDialog(openDialog:MutableState<Boolean>) {
+    MaterialTheme {
+        Column {
+
+
+
+
+            if (openDialog.value) {
+
+                AlertDialog(
+                    onDismissRequest = {
+                        // Dismiss the dialog when the user clicks outside the dialog or on the back
+                        // button. If you want to disable that functionality, simply use an empty
+                        // onCloseRequest.
+                        openDialog.value = false
+                    },
+
+                    text = {
+                        Text("Loadding")
+                    },
+                    confirmButton = {
+
+                    }
+                )
+            }
+        }
+
+    }
 }

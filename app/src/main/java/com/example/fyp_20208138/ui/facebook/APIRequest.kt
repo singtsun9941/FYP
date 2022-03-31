@@ -92,6 +92,7 @@ fun post(igId:String, url:String,msg:String, caption: String){
         JSONObject("{\"image_url\":\""+url+"\",\"caption\":\""+msg+" "+caption+"\"}")
     ) {
         // Insert your code here
+
         val creation_id = it.jsonObject.get("id").toString()
         Log.w("FacebookAPI","creation_id: "+creation_id)
         publish(igId, msg, creation_id)

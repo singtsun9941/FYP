@@ -1,6 +1,7 @@
 package com.example.fyp_20208138.ui.labeling
 
 import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -8,6 +9,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -15,7 +18,9 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.fyp_20208138.FirebaseDatabase.Picture
 import com.example.fyp_20208138.FirebaseDatabase.User
+import com.example.fyp_20208138.MainActivity
 import com.example.fyp_20208138.R
+import com.example.fyp_20208138.ui.main.history.LoadingDialog
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -26,6 +31,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.google.mlkit.vision.label.ImageLabel
 import java.util.*
+import kotlin.concurrent.schedule
 
 
 @Composable
@@ -33,6 +39,7 @@ fun Selectlabel(labels:(List<ImageLabel>), uri:Uri){
     val context = LocalContext.current
     val activity = (context as? Activity)
     val databaseUrl = context.getResources().getString(R.string.databaseURL)
+    val openDialog = remember { mutableStateOf(false)  }
 
     Column(
         modifier = Modifier
@@ -60,14 +67,22 @@ fun Selectlabel(labels:(List<ImageLabel>), uri:Uri){
             }
             Spacer(modifier = Modifier.width(30.dp))
             Button(onClick = {
+                openDialog.value = true
                 uploadImage(uri, labels, databaseUrl)
-                if (activity != null) {
-                    activity.finish()
+                Timer().schedule(2000) {
+                    openDialog.value = false
+                    if (activity != null) {
+                        activity.finish()
+                    }
                 }
+
+
             }) {
                 Text("Save")
             }
         }
+
+        LoadingDialog(openDialog)
 
 
 

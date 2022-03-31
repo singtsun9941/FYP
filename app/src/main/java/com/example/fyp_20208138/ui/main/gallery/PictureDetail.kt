@@ -22,11 +22,14 @@ import com.example.fyp_20208138.R
 import com.example.fyp_20208138.ui.facebook.*
 //import com.example.fyp_20208138.ui.facebook.PageListModel
 import com.example.fyp_20208138.ui.labeling.uploadImage
+import com.example.fyp_20208138.ui.main.history.LoadingDialog
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.mlkit.vision.label.ImageLabel
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.*
+import kotlin.concurrent.schedule
 
 
 @OptIn(ExperimentalFoundationApi::class, androidx.compose.animation.ExperimentalAnimationApi::class,
@@ -46,6 +49,8 @@ fun PictureDetail(picId:String?) {
 
     val activity = (context as? Activity)
     val databaseUrl = context.getResources().getString(R.string.databaseURL)
+
+    val openDialog = remember { mutableStateOf(false)  }
 
     var msg by remember { mutableStateOf("") }
 
@@ -116,8 +121,13 @@ fun PictureDetail(picId:String?) {
                             }
                         }
                     }
-                    if (activity != null) {
-                        activity.finish()
+
+                    openDialog.value = true
+                    Timer().schedule(2000) {
+                        openDialog.value = false
+                        if (activity != null) {
+                            activity.finish()
+                        }
                     }
                 }
                 ) {
@@ -127,6 +137,8 @@ fun PictureDetail(picId:String?) {
 
         }
 
+
+        LoadingDialog(openDialog)
 
     }
 }

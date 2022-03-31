@@ -11,12 +11,15 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.fyp_20208138.FirebaseDatabase.getHistory
 import com.example.fyp_20208138.ui.facebook.getPages
 import com.example.fyp_20208138.ui.main.gallery.getGalery
+import com.example.fyp_20208138.ui.main.history.LoadingDialog
 import com.example.fyp_20208138.ui.main.nav.Nav
 import com.example.fyp_20208138.ui.theme.FYP_20208138Theme
 import com.firebase.ui.auth.AuthUI
@@ -108,9 +111,12 @@ class StartActivity : ComponentActivity() {
 fun Greeting5(name: String) {
     val context = LocalContext.current
     Text(text = " $name!")
+    val openDialog = remember { mutableStateOf(true)  }
     Timer().schedule(2000) {
+        openDialog.value = false
         context.startActivity(Intent(context, MainActivity::class.java))
     }
+    LoadingDialog(openDialog)
 }
 
 @Preview(showBackground = true)
