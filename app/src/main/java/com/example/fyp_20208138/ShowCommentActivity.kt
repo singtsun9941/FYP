@@ -1,6 +1,7 @@
 package com.example.fyp_20208138
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
@@ -11,6 +12,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
@@ -69,13 +73,13 @@ fun DefaultPreview6() {
 
 @Composable
 fun showComment(commentList:MutableList<Comment> , index:Int) {
-
+    val openDialog = remember { mutableStateOf(false)  }
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(15.dp)
+            .clickable { openDialog.value = true },
 
-        ,
         elevation = 10.dp
     ) {
         Column(
@@ -85,5 +89,66 @@ fun showComment(commentList:MutableList<Comment> , index:Int) {
             Text(text = commentList[index].timestamp)
         }
     }
+    replyDialog(commentList[index].text, commentList[index].id,  openDialog)
 
+}
+
+
+@Composable
+fun replyDialog(msg:String, mediaId:String, openDialog: MutableState<Boolean>) {
+    val replyMsg = remember { mutableStateOf("")  }
+    MaterialTheme {
+        Column {
+
+
+            if (openDialog.value) {
+
+                AlertDialog(
+                    onDismissRequest = {
+                        // Dismiss the dialog when the user clicks outside the dialog or on the back
+                        // button. If you want to disable that functionality, simply use an empty
+                        // onCloseRequest.
+                        openDialog.value = false
+                    },
+                    title = {
+                        Text(text = "Reply")
+                    },
+                    text = {
+                        Column() {
+                            Text(msg)
+                            OutlinedTextField(
+                                value = replyMsg.value,
+                                onValueChange = { replyMsg.value = it },
+                                label = { Text("Message") }
+                            )
+                        }
+
+                    },
+
+
+                    confirmButton = {
+                        Button(
+
+                            onClick = {
+                                openDialog.value = false
+                                Log.i("reply","msg: : " + replyMsg.value)
+
+                            }) {
+                            Text("Reply")
+                        }
+                    },
+                    dismissButton = {
+                        Button(
+
+                            onClick = {
+                                openDialog.value = false
+                            }) {
+                            Text("Cancel")
+                        }
+                    }
+                )
+            }
+        }
+
+    }
 }
