@@ -5,11 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,6 +49,7 @@ class StartActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val user = Firebase.auth.currentUser
+        
         if(user != null) {
             loadData()
             setContent {
@@ -60,12 +59,22 @@ class StartActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colors.background
                     ) {
+                        val context = LocalContext.current
                         Greeting5("Loading")
+
                     }
                 }
             }
         }else{
-            signInLauncher.launch(signInIntent)
+            setContent {
+                FYP_20208138Theme {
+                    Button(onClick = {
+                        signInLauncher.launch(signInIntent)
+                    }) {
+                        Text(text = "Login")
+                    }
+                }
+            }    
         }
     }
 
@@ -110,7 +119,15 @@ class StartActivity : ComponentActivity() {
 @Composable
 fun Greeting5(name: String) {
     val context = LocalContext.current
-    Text(text = " $name!")
+    Column() {
+        Text(text = " $name!")
+        Button(onClick = {
+            context.startActivity(Intent(context, MainActivity::class.java))
+        }) {
+            Text(text = "Main Page")
+        }
+    }
+
     val openDialog = remember { mutableStateOf(true)  }
     Timer().schedule(2000) {
         openDialog.value = false

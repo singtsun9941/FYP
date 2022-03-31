@@ -22,16 +22,23 @@ import java.util.*
 @Composable
 fun LoginScreen(LocalFacebookCallbackManager: ProvidableCompositionLocal<CallbackManager>) {
     val callbackManager = LocalFacebookCallbackManager.current
+    val contextLoginScteen = LocalContext.current
+    val activity = (contextLoginScteen as? Activity)
     DisposableEffect(Unit) {
         LoginManager.getInstance().registerCallback(
             callbackManager,
             object : FacebookCallback<LoginResult> {
                 override fun onSuccess(loginResult: LoginResult) {
+
+
                     println("onSuccess $loginResult")
                     val accessToken = AccessToken.getCurrentAccessToken()
                     val isLoggedIn = accessToken != null && !accessToken.isExpired
                     Log.w("FacebookAPI","isLoggedIn: "+isLoggedIn+" "+accessToken)
                     getInfo()
+                    if (activity != null) {
+                        activity.finish()
+                    }
                 }
 
                 override fun onCancel() {

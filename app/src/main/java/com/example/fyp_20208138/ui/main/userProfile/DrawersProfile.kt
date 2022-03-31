@@ -1,5 +1,6 @@
 package com.example.fyp_20208138.ui.main.userProfile
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
@@ -35,7 +36,11 @@ import org.json.JSONObject
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun DrawerProfile(context: Context) {
+    val context = LocalContext.current
+    val activity = (context as? Activity)
 //    (horizontalAlignment = Alignment.CenterHorizontally)
+
+    val facebookLinked = remember { mutableStateOf(isLinkedFacebook())  }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -86,6 +91,10 @@ fun DrawerProfile(context: Context) {
                         AuthUI.getInstance()
                             .signOut(context)
 
+                        if (activity != null) {
+                            activity.finish()
+                        }
+
                     }) {
                         Text("Log out")
                     }
@@ -118,7 +127,8 @@ fun DrawerProfile(context: Context) {
                             Row {
                                 Text(text = it.name)
                                 Spacer(modifier = Modifier.width(30.dp))
-                                if(it.isLinked){
+//                                if(it.isLinked){
+                                if(facebookLinked.value){
                                     Text( text = "Linked")
                                 }else{
                                     Text( text = "Login")

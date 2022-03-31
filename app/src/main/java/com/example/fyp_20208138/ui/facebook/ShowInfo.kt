@@ -1,5 +1,6 @@
 package com.example.fyp_20208138.ui.facebook
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +13,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.fyp_20208138.ui.main.gallery.CheckBox
@@ -25,6 +27,8 @@ fun ShowInfo() {
     var facebookToken = AccessToken.getCurrentAccessToken()
     var profile = Profile.getCurrentProfile()
     val pageList = PageListModel.pageList
+    val context = LocalContext.current
+    val activity = (context as? Activity)
 
 
     Column() {
@@ -59,8 +63,14 @@ fun ShowInfo() {
             }
         }
 
-        Button(onClick = { LoginManager.getInstance().logOut() }) {
+        Button(onClick = {
+            LoginManager.getInstance().logOut()
+            if (activity != null) {
+                activity.finish()
+            }
+        }) {
             Text(text = "Logout")
+
         }
     }
 
