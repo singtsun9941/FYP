@@ -20,8 +20,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat.finishAffinity
+import androidx.lifecycle.ViewModel
 import coil.compose.rememberImagePainter
 import com.example.fyp_20208138.FacebookActivity
+import com.example.fyp_20208138.ui.facebook.Page
 import com.example.fyp_20208138.ui.main.history.showHistory
 import com.example.fyp_20208138.ui.main.nav.NavItem
 import com.example.fyp_20208138.ui.theme.FYP_20208138Theme
@@ -32,6 +35,7 @@ import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import org.json.JSONObject
+import kotlin.system.exitProcess
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -91,9 +95,10 @@ fun DrawerProfile(context: Context) {
                         AuthUI.getInstance()
                             .signOut(context)
 
-                        if (activity != null) {
-                            activity.finish()
-                        }
+//                        if (activity != null) {
+//                            activity.finish()
+//                        }
+                        activity?.finish()
 
                     }) {
                         Text("Log out")
@@ -127,8 +132,8 @@ fun DrawerProfile(context: Context) {
                             Row {
                                 Text(text = it.name)
                                 Spacer(modifier = Modifier.width(30.dp))
-//                                if(it.isLinked){
-                                if(facebookLinked.value){
+                                if(it.isLinked){
+//                                if(facebookLinked.value){
                                     Text( text = "Linked")
                                 }else{
                                     Text( text = "Login")
@@ -165,6 +170,10 @@ data class SocialMediaItem(
 
         )
     }
+}
+
+object SocialMediaItemListModel: ViewModel() {
+    var SocialMediaItemList: MutableList<SocialMediaItem> = mutableListOf<SocialMediaItem>()
 }
 
 fun isLinkedFacebook():Boolean{

@@ -168,6 +168,9 @@ fun getComment(igId:String?){
 }
 
 fun replyFacebookComment(commentId:String, msg:String ){
+    if(AccessToken.getCurrentAccessToken() == null){
+        return
+    }
     val request = GraphRequest.newPostRequest(
         AccessToken.getCurrentAccessToken(),
         "/"+commentId+"/replies",
